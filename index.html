@@ -1,1 +1,53 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>States You Have Bounced On It</title><link rel="stylesheet" href="style.css"></head><body><header><h1>States You Have Bounced On It</h1><p>Live interactive USA map.</p></header><section id="stats"><h2 id="stateCount">0 / 50</h2><div class="progress-container"><div id="progressBar"></div></div><span id="percentText">0%</span></section><main><div id="map">Loading map…</div><aside><h2>Recently Bounced</h2><ul id="recentStates"></ul></aside></main><div id="tooltip"></div><script type="module" src="script.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>States You Have Bounced On It</title>
+  <meta name="description" content="A live interactive U.S. map for marking states you have bounced on.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>States You Have Bounced On It</h1>
+    <p class="subtitle">
+      Hover over a state to see its name. Tap or click a state to mark it.
+      Changes sync live for everyone viewing the page.
+    </p>
+  </header>
+
+  <section id="stats" aria-label="Map progress">
+    <div class="stat-card">
+      <h2 id="stateCount">0 / 50</h2>
+      <p>States Bounced On</p>
+    </div>
+
+    <div class="progress-container" role="progressbar" aria-valuemin="0" aria-valuemax="50" aria-valuenow="0">
+      <div id="progressBar"></div>
+    </div>
+
+    <span id="percentText">0%</span>
+  </section>
+
+  <main>
+    <section id="mapContainer" aria-label="Interactive United States map">
+      <div id="map">Loading map…</div>
+    </section>
+
+    <aside id="sidebar">
+      <h2>Recently Bounced</h2>
+      <ul id="recentStates">
+        <li>No states selected yet.</li>
+      </ul>
+    </aside>
+  </main>
+
+  <footer>
+    <p>Share this page with anyone to view the same live map.</p>
+  </footer>
+
+  <div id="tooltip" role="status" aria-live="polite"></div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
