@@ -8,33 +8,69 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>States You Have Bounced On It</h1>
-    <p class="subtitle">
-      Hover over a state to see its name. Tap or click a state to mark it.
-      Changes sync live for everyone viewing the page.
-    </p>
+  <div id="celebration" aria-hidden="true"></div>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">LIVE USA MAP</span>
+      <h1>States You Have Bounced On It</h1>
+      <p class="subtitle">
+        Tap or click any state to mark it. Every change updates live for everyone.
+      </p>
+    </div>
   </header>
 
   <section id="stats" aria-label="Map progress">
-    <div class="stat-card">
-      <h2 id="stateCount">0 / 50</h2>
-      <p>States Bounced On</p>
+    <div class="stats-grid">
+      <article class="metric-card">
+        <span class="metric-label">States Bounced On</span>
+        <strong id="stateCount" class="metric-value">0 / 50</strong>
+      </article>
+
+      <article class="metric-card percentage-card">
+        <span class="metric-label">Completion</span>
+        <strong id="percentText" class="metric-value percentage-value">0%</strong>
+      </article>
+
+      <article class="metric-card">
+        <span class="metric-label">States Remaining</span>
+        <strong id="remainingCount" class="metric-value">50</strong>
+      </article>
     </div>
 
-    <div class="progress-container" role="progressbar" aria-valuemin="0" aria-valuemax="50" aria-valuenow="0">
-      <div id="progressBar"></div>
+    <div class="progress-shell">
+      <div
+        class="progress-container"
+        role="progressbar"
+        aria-label="States completed"
+        aria-valuemin="0"
+        aria-valuemax="50"
+        aria-valuenow="0"
+      >
+        <div id="progressBar"></div>
+      </div>
+      <p id="progressMessage">Your map is ready to begin.</p>
     </div>
-
-    <span id="percentText">0%</span>
   </section>
 
   <main>
     <section id="mapContainer" aria-label="Interactive United States map">
+      <div class="map-heading">
+        <div>
+          <span class="section-kicker">INTERACTIVE MAP</span>
+          <h2>Choose your states</h2>
+        </div>
+        <div class="legend" aria-label="Map legend">
+          <span><i class="legend-dot unselected-dot"></i>Not selected</span>
+          <span><i class="legend-dot selected-dot"></i>Bounced on</span>
+        </div>
+      </div>
+
       <div id="map">Loading map…</div>
     </section>
 
     <aside id="sidebar">
+      <span class="section-kicker">LATEST PICKS</span>
       <h2>Recently Bounced</h2>
       <ul id="recentStates">
         <li>No states selected yet.</li>
@@ -43,11 +79,22 @@
   </main>
 
   <footer>
-    <p>Share this page with anyone to view the same live map.</p>
+    <p>Live updates are shared with everyone viewing this page.</p>
   </footer>
 
-  <div id="tooltip" role="status" aria-live="polite"></div>
 
+  <div id="mediaPopup" class="media-popup" aria-hidden="true">
+    <div class="media-popup-card">
+      <img src="assets/bounce-image.jpeg" alt="Celebration image shown when a state is pressed">
+      <p id="mediaPopupState">State selected!</p>
+    </div>
+  </div>
+
+  <audio id="stateSound" preload="auto">
+    <source src="assets/bounce-sound.mp3" type="audio/mpeg">
+  </audio>
+
+  <div id="tooltip" role="status" aria-live="polite"></div>
   <script type="module" src="script.js"></script>
 </body>
 </html>
