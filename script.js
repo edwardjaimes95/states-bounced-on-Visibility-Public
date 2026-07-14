@@ -32,6 +32,7 @@ const celebration = document.getElementById("celebration");
 const mediaPopup = document.getElementById("mediaPopup");
 const mediaPopupState = document.getElementById("mediaPopupState");
 const stateSound = document.getElementById("stateSound");
+const loveBanner = document.getElementById("loveBanner");
 let mediaPopupTimer;
 
 let selectedStates = {};
@@ -89,6 +90,7 @@ function buildMap() {
 
       selectedStates[id] = !wasSelected;
       animateState(this);
+      animateLoveBanner();
       playStateMedia(stateNames[id] || "State", selectedStates[id]);
       updateDisplay();
 
@@ -114,6 +116,15 @@ function buildMap() {
   updateDisplay(false);
 }
 
+
+
+function animateLoveBanner() {
+  if (!loveBanner) return;
+  loveBanner.classList.remove("state-beat");
+  void loveBanner.getBoundingClientRect();
+  loveBanner.classList.add("state-beat");
+  window.setTimeout(() => loveBanner.classList.remove("state-beat"), 800);
+}
 
 function playStateMedia(stateName, isSelected) {
   window.clearTimeout(mediaPopupTimer);
