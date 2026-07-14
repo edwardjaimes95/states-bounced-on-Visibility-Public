@@ -33,7 +33,22 @@ const mediaPopup = document.getElementById("mediaPopup");
 const mediaPopupState = document.getElementById("mediaPopupState");
 const stateSound = document.getElementById("stateSound");
 const loveBanner = document.getElementById("loveBanner");
+const achievementCards = [...document.querySelectorAll(".achievement-card")];
+const nextAchievementText = document.getElementById("nextAchievementText");
+const achievementToast = document.getElementById("achievementToast");
+const achievementToastIcon = document.getElementById("achievementToastIcon");
+const achievementToastTitle = document.getElementById("achievementToastTitle");
+const mapContainerElement = document.getElementById("mapContainer");
+let previousUnlockedThresholds = new Set();
 let mediaPopupTimer;
+
+
+const achievements = [
+  { threshold: 10, title: "Road Warrior", icon: "🥉" },
+  { threshold: 25, title: "Cross Country", icon: "🥈" },
+  { threshold: 40, title: "Bounce Master", icon: "🥇" },
+  { threshold: 50, title: "USA Conquered", icon: "👑" }
+];
 
 let selectedStates = {};
 let statePaths;
@@ -188,6 +203,88 @@ function getProgressMessage(count) {
   return "All 50 states completed!";
 }
 
+
+function updateAchievements(count, allowUnlockAnimation = true) {
+  const unlockedNow = new Set(
+    achievements
+      .filter(achievement => count >= achievement.threshold)
+      .map(achievement => achievement.threshold)
+  );
+
+  achievementCards.forEach(card => {
+    const threshold = Number(card.dataset.threshold);
+    const status = card.querySelector(".achievement-status");
+    const isUnlocked = unlockedNow.has(threshold);
+    const wasUnlocked = previousUnlockedThresholds.has(threshold);
+
+    card.classList.toggle("unlocked", isUnlocked);
+    status.textContent = isUnlocked ? "Unlocked" : "Locked";
+
+    if (allowUnlockAnimation && isUnlocked && !wasUnlocked) {
+      const achievement = achievements.find(item => item.threshold === threshold);
+      card.classList.remove("just-unlocked");
+      void card.getBoundingClientRect();
+      card.classList.add("just-unlocked");
+      showAchievementToast(achievement);
+
+      window.setTimeout(() => {
+        card.classList.remove("just-unlocked");
+      }, 1000);
+    }
+  });
+
+  const next = achievements.find(achievement => count < achievement.threshold);
+
+  nextAchievementText.textContent = next
+    ? `Next achievement: ${next.title} at ${next.threshold} states`
+    : "Every achievement unlocked!";
+
+  mapContainerElement.classList.toggle("map-complete", count === 50);
+  previousUnlockedThresholds = unlockedNow;
+}
+
+function showAchievementToast(achievement) {
+  achievementToastIcon.textContent = achievement.icon;
+  achievementToastTitle.textContent = achievement.title;
+
+  achievementToast.classList.remove("show");
+  void achievementToast.getBoundingClientRect();
+  achievementToast.classList.add("show");
+
+  if (achievement.threshold === 50) {
+    launchFireworks();
+  }
+}
+
+function launchFireworks() {
+  const colors = ["#f4c84c", "#0ea66c", "#1f6ed0", "#ef6174", "#ffffff"];
+
+  for (let burst = 0; burst < 7; burst += 1) {
+    const centerX = 12 + Math.random() * 76;
+    const centerY = 12 + Math.random() * 45;
+
+    for (let i = 0; i < 18; i += 1) {
+      const particle = document.createElement("span");
+      const angle = (Math.PI * 2 * i) / 18;
+      const distance = 55 + Math.random() * 95;
+
+      particle.className = "firework";
+      particle.style.left = `${centerX}%`;
+      particle.style.top = `${centerY}%`;
+      particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+      particle.style.setProperty("--firework-x", `${Math.cos(angle) * distance}px`);
+      particle.style.setProperty("--firework-y", `${Math.sin(angle) * distance}px`);
+      particle.style.animationDelay = `${burst * 0.18}s`;
+
+      celebration.appendChild(particle);
+    }
+  }
+
+  window.setTimeout(() => {
+    celebration.querySelectorAll(".firework").forEach(item => item.remove());
+  }, 3000);
+}
+
 function updateDisplay(animate = true) {
   const selectedIds = Object.keys(selectedStates).filter(id => selectedStates[id]);
   const count = selectedIds.length;
@@ -206,6 +303,7 @@ function updateDisplay(animate = true) {
   progressBar.style.width = `${percent}%`;
   progressContainer.setAttribute("aria-valuenow", String(count));
   progressMessage.textContent = getProgressMessage(count);
+  updateAchievements(count, animate);
 
   if (animate && count !== previousCount) {
     animateMetric(stateCount);

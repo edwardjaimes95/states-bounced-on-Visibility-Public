@@ -58,6 +58,63 @@
     </div>
   </section>
 
+
+  <section id="achievements" class="achievements-section" aria-label="Achievements">
+    <div class="achievements-heading">
+      <div>
+        <span class="section-kicker">ACHIEVEMENTS</span>
+        <h2>Your Bounce Milestones</h2>
+      </div>
+      <p id="nextAchievementText">Next achievement: Road Warrior at 10 states</p>
+    </div>
+
+    <div class="achievement-grid">
+      <article class="achievement-card" data-threshold="10">
+        <span class="achievement-icon">🥉</span>
+        <div>
+          <h3>Road Warrior</h3>
+          <p>Mark 10 states</p>
+        </div>
+        <span class="achievement-status">Locked</span>
+      </article>
+
+      <article class="achievement-card" data-threshold="25">
+        <span class="achievement-icon">🥈</span>
+        <div>
+          <h3>Cross Country</h3>
+          <p>Mark 25 states</p>
+        </div>
+        <span class="achievement-status">Locked</span>
+      </article>
+
+      <article class="achievement-card" data-threshold="40">
+        <span class="achievement-icon">🥇</span>
+        <div>
+          <h3>Bounce Master</h3>
+          <p>Mark 40 states</p>
+        </div>
+        <span class="achievement-status">Locked</span>
+      </article>
+
+      <article class="achievement-card" data-threshold="50">
+        <span class="achievement-icon">👑</span>
+        <div>
+          <h3>USA Conquered</h3>
+          <p>Complete all 50 states</p>
+        </div>
+        <span class="achievement-status">Locked</span>
+      </article>
+    </div>
+  </section>
+
+  <div id="achievementToast" class="achievement-toast" role="status" aria-live="assertive">
+    <span id="achievementToastIcon">🏆</span>
+    <div>
+      <small>Achievement unlocked</small>
+      <strong id="achievementToastTitle">Road Warrior</strong>
+    </div>
+  </div>
+
   <main>
     <section id="mapContainer" aria-label="Interactive United States map">
       <div class="map-heading">
